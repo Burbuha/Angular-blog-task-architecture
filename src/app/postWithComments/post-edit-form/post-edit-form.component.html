@@ -1,0 +1,35 @@
+<div class="card mt-3 mb-3">
+  <h6 class="text-center mt-3">Edit post</h6>
+
+  <div class="form-floating mb-3 mt-3">
+    <input
+      type="text"
+      class="form-control"
+      id="titleInput"
+      placeholder="title"
+    />
+    <label for="titleInput">Title</label>
+  </div>
+
+  <div class="form-floating mb-3">
+    <input type="text" class="form-control" id="postInput" placeholder="Text" />
+    <label for="postInput">Text</label>
+  </div>
+
+  <div
+    class="btn-group d-flex justify-content-end"
+    role="group"
+    aria-label="Basic example"
+  >
+    <button
+      type="button"
+      class="btn btn-secondary btn-outline-warning"
+      (click)="onChangePost()"
+    >
+      Save changes
+    </button>
+    <button class="btn btn-outline-warning btn-sm" (click)="onDeletePost()">
+      Delete post
+    </button>
+  </div>
+</div>

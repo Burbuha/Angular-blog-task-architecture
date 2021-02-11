@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { catchError, tap } from 'rxjs/operators';
-
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { Post } from './models/post';
 import { Comment } from './models/comment';
 

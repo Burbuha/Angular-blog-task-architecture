@@ -6,12 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { PostsComponent } from './containers/posts/posts.component';
-import { PostDetailComponent } from './containers/post-detail/post-detail.component';
-import { CommentsComponent } from './components/comments/comments.component';
-import { CreatePostComponent } from './components/create-post/create-post.component';
-import { PostComponent } from './components/post/post.component';
-import { PostPreviewComponent } from './components/post-preview/post-preview.component';
+import { PostsComponent } from './posts/posts-container/posts.component';
+import { PostDetailComponent } from './postWithComments/post-container/post-detail.component';
+import { CommentsComponent } from './postWithComments/comments/comments.component';
+import { CreatePostComponent } from './posts/create-post/create-post.component';
+import { PostComponent } from './postWithComments/post/post.component';
+import { PostPreviewComponent } from './posts/post-preview/post-preview.component';
+import { PostEditComponent } from './postWithComments/post-edit-form/post-edit-form.component';
+import { CommentAddFormComponent } from './postWithComments/comment-add-form/comment-add-form.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { PostPreviewComponent } from './components/post-preview/post-preview.com
     CreatePostComponent,
     PostComponent,
     PostPreviewComponent,
+    PostEditComponent,
+    CommentAddFormComponent,
   ],
   imports: [BrowserModule, FormsModule, AppRoutingModule, HttpClientModule],
   providers: [PostService],

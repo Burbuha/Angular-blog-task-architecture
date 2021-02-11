@@ -8,17 +8,8 @@ import { Post } from 'src/app/models/post';
 })
 export class PostComponent implements OnInit {
   @Input() post?: Post;
-  @Output() saveChanges = new EventEmitter();
-  @Output() deletePost = new EventEmitter();
 
   constructor() {}
 
   ngOnInit(): void {}
-
-  onChangePost(): void {
-    this.saveChanges.emit();
-  }
-  onDeletePost(): void {
-    this.deletePost.emit();
-  }
 }
