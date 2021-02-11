@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { Post } from 'src/app/models/post';
-import { PostService } from 'src/app/post.service';
+import { PostsFacadeService } from '../posts-facade.service';
+//import { PostService } from 'src/app/post.service';
+
 
 @Component({
   selector: 'app-posts',
@@ -8,16 +11,19 @@ import { PostService } from 'src/app/post.service';
   styleUrls: ['./posts.component.css'],
 })
 export class PostsComponent implements OnInit {
+
   posts?: Post[];
+  // post?: Post;
+  //newPost: Post = new Post();
 
-  constructor(private postService: PostService) {}
+  isUpdating$: Observable<boolean>;
 
-  ngOnInit(): void {
-    this.getPosts();
+  constructor(private postService: PostsFacadeService) {
+    this.isUpdating$ = postService.isUpdating$();
   }
 
-  getPosts(): void {
-    this.postService.getPosts().subscribe((posts) => (this.posts = posts));
+  ngOnInit(): void {
+    this.postService.loadPosts();
   }
 
   addPost(value: any): void {
@@ -26,8 +32,6 @@ export class PostsComponent implements OnInit {
     if (!title && !body) {
       return;
     }
-    this.postService.addPost({ title, body } as Post).subscribe((post) => {
-      this.posts?.unshift(post);
-    });
+    this.postService.addPost({ title, body } as Post);
   }
 }

@@ -1,6 +1,8 @@
-<div *ngIf="post">
+<div *ngIf="post; else loading">
   <h5 class="card-title">{{ post.title }}</h5>
   <p class="card-text text-truncate">
     {{ post.body }}
   </p>
 </div>
+
+<ng-template #loading>Loading...</ng-template>
