@@ -1,0 +1,10 @@
+<app-post
+  [post]="post"
+  (saveChanges)="saveChanges()"
+  (deletePost)="deletePost()"
+></app-post>
+
+<app-comments
+  [comments]="comments"
+  (addComment)="addComment($event)"
+></app-comments>
