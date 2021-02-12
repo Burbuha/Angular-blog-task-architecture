@@ -1,4 +1,4 @@
-<app-post [post]="post"></app-post>
+<app-post [post]="post | async"></app-post>
 
 <app-post-edit-form
   [post]="post"
@@ -6,6 +6,6 @@
   (deletePost)="deletePost()"
 ></app-post-edit-form>
 
-<app-comments [comments]="comments"></app-comments>
+<app-comments [comments]="comments | async"></app-comments>
 
 <app-comment-add-form (addComment)="addComment($event)"></app-comment-add-form>

@@ -1,10 +1,12 @@
 import { Location } from '@angular/common';
+import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Post } from 'src/app/models/post';
 import { Comment } from 'src/app/models/comment';
-import { PostService } from 'src/app/post.service';
+import { PostsFacadeService } from 'src/app/posts/posts-facade.service';
+import { CommentsFacadeService } from '../comments-facade.service';
 
 @Component({
   selector: 'app-post-detail',
@@ -12,30 +14,27 @@ import { PostService } from 'src/app/post.service';
   styleUrls: ['./post-detail.component.css'],
 })
 export class PostDetailComponent implements OnInit {
-  post?: Post;
-  comments: any;
+  post: Observable<Post>;
+  comments: Observable<Comment[]>;
+  isUpdatingPost$: Observable<boolean>;
+  isUpdatingComment$: Observable<boolean>;
 
   constructor(
     private route: ActivatedRoute,
-    private postService: PostService,
+    private postService: PostsFacadeService,
+    private commentService: CommentsFacadeService,
     private location: Location
-  ) {}
+  ) {
+    this.post = postService.getPost$();
+    this.comments = commentService.getComments$();
+    this.isUpdatingPost$ = postService.isUpdating$();
+    this.isUpdatingComment$ = commentService.isUpdating$();
+  }
 
   ngOnInit(): void {
-    this.getPost();
-    this.getComment();
-  }
-
-  getPost(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.postService.getPost(id).subscribe((post) => (this.post = post));
-  }
-
-  getComment(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.postService
-      .getComments(id)
-      .subscribe((comments) => (this.comments = comments));
+    this.postService.loadPost(id);
+    this.commentService.loadComments(id);
   }
 
   addComment(value: string): void {
@@ -46,17 +45,23 @@ export class PostDetailComponent implements OnInit {
     if (!name && !body && !postID) {
       return;
     }
-    this.postService
-      .addComment({ postID, name, body } as Comment)
-      .subscribe((comment) => this.comments.push(comment));
-  }
-
-  saveChanges(): void {
-    this.postService.updatePost(this.post!).subscribe(() => this.goBack());
+    this.commentService.addComment({ postID, name, body } as Comment);
   }
 
   deletePost(): void {
-    this.postService.deletePost(this.post!).subscribe(() => this.goBack());
+    const id = Number(this.route.snapshot.paramMap.get('id'));
+    this.postService.deletePost(id);
+    this.goBack();
+  }
+
+  saveChanges(value: any): void {
+    const title = value[0].trim();
+    const body = value[1].trim();
+    if (!title && !body) {
+      return;
+    }
+    this.postService.updatePost({ title, body } as Post);
+    this.goBack();
   }
 
   goBack(): void {

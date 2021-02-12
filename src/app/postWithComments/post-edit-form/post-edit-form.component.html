@@ -7,12 +7,19 @@
       class="form-control"
       id="titleInput"
       placeholder="title"
+      #title
     />
     <label for="titleInput">Title</label>
   </div>
 
   <div class="form-floating mb-3">
-    <input type="text" class="form-control" id="postInput" placeholder="Text" />
+    <input
+      type="text"
+      class="form-control"
+      id="postInput"
+      placeholder="Text"
+      #body
+    />
     <label for="postInput">Text</label>
   </div>
 
@@ -24,7 +31,7 @@
     <button
       type="button"
       class="btn btn-secondary btn-outline-warning"
-      (click)="onChangePost()"
+      (click)="onChangePost([title.value, body.value])"
     >
       Save changes
     </button>

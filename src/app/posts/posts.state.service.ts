@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { Post } from '../models/post';
 
 @Injectable()
 export class PostsState {
-
   private updating$ = new BehaviorSubject(false);
 
   private posts$: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);
-
-  // public readonly posts: Observable<Post[]> = this.posts$.asObservable();
+  private post$: BehaviorSubject<any> = new BehaviorSubject<any>(0);
 
   isUpdating$() {
     return this.updating$.asObservable();
@@ -23,8 +21,16 @@ export class PostsState {
     return this.posts$.asObservable();
   }
 
+  getPost() {
+    return this.post$.asObservable();
+  }
+
   setPosts(posts: Post[]) {
     this.posts$.next(posts);
+  }
+
+  setPost(post: Post) {
+    this.post$.next(post);
   }
 
   addPost(post: Post) {
@@ -34,17 +40,16 @@ export class PostsState {
 
   updatePost(updatedPost: Post) {
     const posts = this.posts$.getValue();
-    const indexOfUpdated = posts.findIndex(post => post.id === updatedPost.id);
+    const indexOfUpdated = posts.findIndex(
+      (post) => post.id === updatedPost.id
+    );
     posts[indexOfUpdated] = updatedPost;
     this.posts$.next([...posts]);
+    console.log('ok');
   }
 
   removePost(postRemove: Post) {
     const currentValue = this.posts$.getValue();
-    this.posts$.next(currentValue.filter(post => post !== postRemove));
+    this.posts$.next(currentValue.filter((post) => post !== postRemove));
   }
 }
-
-
-
-

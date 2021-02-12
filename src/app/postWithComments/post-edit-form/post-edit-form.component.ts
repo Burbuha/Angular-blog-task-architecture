@@ -16,8 +16,8 @@ export class PostEditComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onChangePost(): void {
-    this.saveChanges.emit();
+  onChangePost(value: any): void {
+    this.saveChanges.emit(value);
   }
   onDeletePost(): void {
     this.deletePost.emit();

@@ -6,13 +6,11 @@ import { PostsState } from './posts.state.service';
 import { Post } from 'src/app/models/post';
 
 @Injectable()
-
 export class PostsFacadeService {
-
   constructor(
     private postsApi: PostsApiService,
     private postsState: PostsState
-  ) { }
+  ) {}
 
   isUpdating$(): Observable<any> {
     return this.postsState.isUpdating$();
@@ -24,14 +22,56 @@ export class PostsFacadeService {
     return this.postsState.getPosts$();
   }
 
+  getPost$(): Observable<any> {
+    return this.postsState.getPost();
+  }
+
   loadPosts() {
-    return this.postsApi.getPosts()
-      .pipe(tap(posts => this.postsState.setPosts(posts)));
+    return this.postsApi
+      .getPosts()
+      .pipe(tap((posts) => this.postsState.setPosts(posts)))
+      .subscribe(
+        () => this.postsState.getPosts$(),
+        (error) => console.log(error),
+        () => this.postsState.setUpdating(false)
+      );
+  }
+
+  loadPost(id: number) {
+    return this.postsApi
+      .getPost(id)
+      .pipe(tap((post: any) => this.postsState.setPost(post)))
+      .subscribe(
+        () => this.postsState.getPost(),
+        (error) => console.log(error),
+        () => this.postsState.setUpdating(false)
+      );
   }
 
   addPost(post: Post) {
-    return this.postsApi.addPost(post)
-      .pipe(tap(posts => this.postsState.addPost(posts)));
+    return (
+      this.postsApi
+        .addPost(post)
+        // .pipe(tap((posts) => this.postsState.addPost(posts)))
+        .subscribe(
+          (post) => this.postsState.addPost(post),
+          (error) => console.log(error),
+          () => this.postsState.setUpdating(false)
+        )
+    );
+  }
+
+  deletePost(id: number) {
+    return (
+      this.postsApi
+        .deletePost(id)
+        // .pipe(tap((id) => this.postsState.removePost(id)))
+        .subscribe(
+          (id) => this.postsState.removePost(id),
+          (error) => console.log(error),
+          () => this.postsState.setUpdating(false)
+        )
+    );
   }
 
   // пессимистичное обновление
@@ -39,12 +79,11 @@ export class PostsFacadeService {
   // 2. обновить состояние пользовательского интерфейса
   updatePost(post: Post) {
     this.postsState.setUpdating(true);
-    this.postsApi.updatePost(post)
-      .subscribe(
-        () => this.postsState.updatePost(post),
-        (error) => console.log(error),
-        () => this.postsState.setUpdating(false)
-      );
+    this.postsApi.updatePost(post).subscribe(
+      () => this.postsState.updatePost(post),
+      (error) => console.log(error),
+      () => this.postsState.setUpdating(false)
+    );
   }
 
   // оптимистичное обновление
@@ -65,8 +104,4 @@ export class PostsFacadeService {
   //       }
   //     );
   // }
-
-
 }
-
-

@@ -1,9 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Post } from 'src/app/models/post';
 import { PostsFacadeService } from '../posts-facade.service';
-//import { PostService } from 'src/app/post.service';
-
 
 @Component({
   selector: 'app-posts',
@@ -11,14 +9,12 @@ import { PostsFacadeService } from '../posts-facade.service';
   styleUrls: ['./posts.component.css'],
 })
 export class PostsComponent implements OnInit {
-
-  posts?: Post[];
-  // post?: Post;
-  //newPost: Post = new Post();
+  posts: Observable<Post[]>;
 
   isUpdating$: Observable<boolean>;
 
   constructor(private postService: PostsFacadeService) {
+    this.posts = postService.getPosts$();
     this.isUpdating$ = postService.isUpdating$();
   }
 
