@@ -8,6 +8,7 @@
       id="titleInput"
       placeholder="title"
       #title
+      [ngModel]="post.title"
     />
     <label for="titleInput">Title</label>
   </div>
@@ -19,6 +20,7 @@
       id="postInput"
       placeholder="Text"
       #body
+      [ngModel]="post.body"
     />
     <label for="postInput">Text</label>
   </div>

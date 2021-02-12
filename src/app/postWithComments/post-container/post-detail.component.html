@@ -1,7 +1,7 @@
 <app-post [post]="post | async"></app-post>
 
 <app-post-edit-form
-  [post]="post"
+  [post]="post | async"
   (saveChanges)="saveChanges()"
   (deletePost)="deletePost()"
 ></app-post-edit-form>
