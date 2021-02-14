@@ -8,9 +8,9 @@ import { Post } from '../shared/models/post';
 export class PostsApiService {
 
   private readonly postsUrl = 'https://jsonplaceholder.typicode.com/posts';
-  private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  };
+  // private httpOptions = {
+  //   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
+  // };
 
   constructor(private http: HttpClient) { }
 
@@ -28,16 +28,16 @@ export class PostsApiService {
     const id = typeof post === 'number' ? post : post.id;
     const url = `${this.postsUrl}/${id}`;
 
-    return this.http.put(url, post, this.httpOptions);
+    return this.http.put(url, post);
   }
 
   deletePost(post: Post | number): Observable<Post> {
     const id = typeof post === 'number' ? post : post.id;
     const url = `${this.postsUrl}/${id}`;
-    return this.http.delete<Post>(url, this.httpOptions);
+    return this.http.delete<Post>(url);
   }
 
   addPost(post: Post): Observable<Post> {
-    return this.http.post<Post>(this.postsUrl, post, this.httpOptions);
+    return this.http.post<Post>(this.postsUrl, post);
   }
 }

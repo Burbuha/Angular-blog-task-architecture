@@ -8,9 +8,6 @@ import { Comment } from '../shared/models/comment';
 export class CommentsApiService {
 
   private readonly postsUrl = 'https://jsonplaceholder.typicode.com/posts';
-  private httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
-  };
 
   constructor(private http: HttpClient) { }
 
@@ -23,7 +20,7 @@ export class CommentsApiService {
     const id = comment.postID;
     const url = `${this.postsUrl}/${id}/comments`;
     return this.http
-      .post<Comment>(url, comment, this.httpOptions);
+      .post<Comment>(url, comment);
   }
 
 }
