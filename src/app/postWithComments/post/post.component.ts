@@ -1,5 +1,5 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Post } from 'src/app/models/post';
+import { Component, Input, OnInit, } from '@angular/core';
+import { Post } from 'src/app/shared/models/post';
 
 @Component({
   selector: 'app-post',
@@ -9,7 +9,7 @@ import { Post } from 'src/app/models/post';
 export class PostComponent implements OnInit {
   @Input() post?: Post;
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 }

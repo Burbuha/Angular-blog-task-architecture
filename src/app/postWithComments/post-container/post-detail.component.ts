@@ -1,12 +1,12 @@
-import { Location } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Post } from 'src/app/models/post';
-import { Comment } from 'src/app/models/comment';
-import { PostsFacadeService } from 'src/app/posts/posts-facade.service';
-import { CommentsFacadeService } from '../comments-facade.service';
+import { Post } from 'src/app/shared/models/post';
+import { Comment } from 'src/app/shared/models/comment';
+
+import { CommentsFacadeService } from './../comments-facade.service';
+import { PostsFacadeService } from './../../posts/posts-facade.service';
 
 @Component({
   selector: 'app-post-detail',
@@ -14,57 +14,55 @@ import { CommentsFacadeService } from '../comments-facade.service';
   styleUrls: ['./post-detail.component.css'],
 })
 export class PostDetailComponent implements OnInit {
+
   post: Observable<Post>;
   comments: Observable<Comment[]>;
-  isUpdatingPost$: Observable<boolean>;
+
+  isUpdating$: Observable<boolean>;
   isUpdatingComment$: Observable<boolean>;
+
+  private id = Number(this.route.snapshot.paramMap.get('id'));
 
   constructor(
     private route: ActivatedRoute,
     private postService: PostsFacadeService,
-    private commentService: CommentsFacadeService,
-    private location: Location
+    private commentsService: CommentsFacadeService
   ) {
+    this.comments = commentsService.getComments$();
+    this.isUpdatingComment$ = commentsService.isUpdating$();
     this.post = postService.getPost$();
-    this.comments = commentService.getComments$();
-    this.isUpdatingPost$ = postService.isUpdating$();
-    this.isUpdatingComment$ = commentService.isUpdating$();
+    this.isUpdating$ = postService.isUpdating$();
   }
 
   ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.postService.loadPost(id);
-    this.commentService.loadComments(id);
+    this.postService.loadPost(this.id);
+    this.commentsService.loadComments(this.id);
+
+    // this.route.params.subscribe((params) => {
+    //   this.id = params.id;
+    // });
   }
 
   addComment(value: string): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
     const name = value[0].trim();
     const body = value[1].trim();
-    const postID = id;
+    const postID = this.id;
     if (!name && !body && !postID) {
       return;
     }
-    this.commentService.addComment({ postID, name, body } as Comment);
+    this.commentsService
+      .addComment({ postID, name, body } as Comment);
+  }
+
+  saveChanges(value: string): void {
+    console.log(value);
+    const title = value[0].trim();
+    const body = value[1].trim();
+    const id = this.id;
+    this.postService.updatePost({ id, title, body } as Post);
   }
 
   deletePost(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    this.postService.deletePost(id);
-    this.goBack();
-  }
-
-  saveChanges(value: any): void {
-    const title = value[0].trim();
-    const body = value[1].trim();
-    if (!title && !body) {
-      return;
-    }
-    this.postService.updatePost({ title, body } as Post);
-    this.goBack();
-  }
-
-  goBack(): void {
-    this.location.back();
+    this.postService.deletePost(this.id);
   }
 }

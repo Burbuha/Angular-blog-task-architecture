@@ -1,4 +1,4 @@
-import { Post } from 'src/app/models/post';
+import { Post } from 'src/app/shared/models/post';
 import { Component, OnInit, Input } from '@angular/core';
 
 @Component({

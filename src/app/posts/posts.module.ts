@@ -14,6 +14,8 @@ import { PostsState } from './posts.state.service';
   declarations: [PostsComponent, CreatePostComponent, PostPreviewComponent],
   imports: [BrowserModule, FormsModule, AppRoutingModule, HttpClientModule],
   providers: [PostsApiService, PostsFacadeService, PostsState],
-  exports: [PostsComponent, CreatePostComponent, PostPreviewComponent],
+  exports: [
+    //PostsComponent, CreatePostComponent, PostPreviewComponent
+  ],
 })
 export class PostsModule { }

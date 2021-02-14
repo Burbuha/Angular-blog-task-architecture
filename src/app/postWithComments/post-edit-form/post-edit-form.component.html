@@ -2,42 +2,20 @@
   <h6 class="text-center mt-3">Edit post</h6>
 
   <div class="form-floating mb-3 mt-3">
-    <input
-      type="text"
-      class="form-control"
-      id="titleInput"
-      placeholder="title"
-      #title
-      [ngModel]="post.title"
-    />
+    <input type="text" class="form-control" id="titleInput" placeholder="title" [(ngModel)]="post.title" #title />
     <label for="titleInput">Title</label>
   </div>
 
   <div class="form-floating mb-3">
-    <input
-      type="text"
-      class="form-control"
-      id="postInput"
-      placeholder="Text"
-      #body
-      [ngModel]="post.body"
-    />
+    <input type="text" class="form-control" id="postInput" placeholder="Text" [(ngModel)]="post.body" #body />
     <label for="postInput">Text</label>
   </div>
 
-  <div
-    class="btn-group d-flex justify-content-end"
-    role="group"
-    aria-label="Basic example"
-  >
-    <button
-      type="button"
-      class="btn btn-secondary btn-outline-warning"
-      (click)="onChangePost([title.value, body.value])"
-    >
+  <div class="btn-group d-flex justify-content-end" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-secondary btn-outline-warning" (click)="changePost([title.value, body.value])">
       Save changes
     </button>
-    <button class="btn btn-outline-warning btn-sm" (click)="onDeletePost()">
+    <button class="btn btn-outline-warning btn-sm" (click)="deletePost()">
       Delete post
     </button>
   </div>

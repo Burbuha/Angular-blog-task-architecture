@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { Post } from 'src/app/models/post';
+import { Post } from 'src/app/shared/models/post';
 
 @Component({
   selector: 'app-post-edit-form',
@@ -7,19 +7,21 @@ import { Post } from 'src/app/models/post';
   styleUrls: ['./post-edit-form.component.css'],
 })
 export class PostEditComponent implements OnInit {
+
   @Input() post?: Post;
 
-  @Output() saveChanges = new EventEmitter();
-  @Output() deletePost = new EventEmitter();
+  @Output() onChangePost = new EventEmitter();
+  @Output() onDeletePost = new EventEmitter();
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
-  onChangePost(value: any): void {
-    this.saveChanges.emit(value);
+  changePost(value: any): void {
+    console.log(value);
+    this.onChangePost.emit(value);
   }
-  onDeletePost(): void {
-    this.deletePost.emit();
+  deletePost(): void {
+    this.onDeletePost.emit();
   }
 }

@@ -3,14 +3,18 @@ import { Observable } from 'rxjs';
 import { PostsApiService } from './posts-api.service';
 import { Injectable } from '@angular/core';
 import { PostsState } from './posts.state.service';
-import { Post } from 'src/app/models/post';
+import { Post } from 'src/app/shared/models/post';
+import { Location } from '@angular/common';
 
 @Injectable()
+
 export class PostsFacadeService {
+
   constructor(
     private postsApi: PostsApiService,
-    private postsState: PostsState
-  ) {}
+    private postsState: PostsState,
+    private location: Location,
+  ) { }
 
   isUpdating$(): Observable<any> {
     return this.postsState.isUpdating$();
@@ -27,9 +31,8 @@ export class PostsFacadeService {
   }
 
   loadPosts() {
-    return this.postsApi
-      .getPosts()
-      .pipe(tap((posts) => this.postsState.setPosts(posts)))
+    return this.postsApi.getPosts()
+      .pipe(tap(posts => this.postsState.setPosts(posts)))
       .subscribe(
         () => this.postsState.getPosts$(),
         (error) => console.log(error),
@@ -54,7 +57,10 @@ export class PostsFacadeService {
         .addPost(post)
         // .pipe(tap((posts) => this.postsState.addPost(posts)))
         .subscribe(
-          (post) => this.postsState.addPost(post),
+          (post) => {
+            this.postsState.addPost(post);
+            this.goBack();
+          },
           (error) => console.log(error),
           () => this.postsState.setUpdating(false)
         )
@@ -65,13 +71,20 @@ export class PostsFacadeService {
     return (
       this.postsApi
         .deletePost(id)
-        // .pipe(tap((id) => this.postsState.removePost(id)))
+        .pipe(tap((id) => this.postsState.removePost(id)))
         .subscribe(
-          (id) => this.postsState.removePost(id),
+          (id) => {
+            this.postsState.removePost(id);
+            this.goBack();
+          },
           (error) => console.log(error),
           () => this.postsState.setUpdating(false)
         )
     );
+  }
+
+  goBack(): void {
+    this.location.back();
   }
 
   // пессимистичное обновление
@@ -79,29 +92,16 @@ export class PostsFacadeService {
   // 2. обновить состояние пользовательского интерфейса
   updatePost(post: Post) {
     this.postsState.setUpdating(true);
-    this.postsApi.updatePost(post).subscribe(
-      () => this.postsState.updatePost(post),
-      (error) => console.log(error),
-      () => this.postsState.setUpdating(false)
-    );
+    this.postsApi.updatePost(post)
+      .subscribe(
+        () => {
+          this.postsState.updatePost(post);
+          this.goBack();
+        },
+        (error) => console.log(error),
+        () => this.postsState.setUpdating(false)
+      );
   }
-
-  // оптимистичное обновление
-  // 1. обновить состояние пользовательского интерфейса
-  // 2. вызвать API
-  // addCashflowCategory(category: CashflowCategory) {
-  //   this.settingsState.addCashflowCategory(category);
-  //   this.cashflowCategoryApi.createCashflowCategory(category)
-  //     .subscribe(
-  //       (addedCategoryWithId: CashflowCategory) => {
-  //         // успех обратного вызова - есть идентификатор , генерируемый сервером, давайте обновить состояние
-  //         this.settingsState.updateCashflowCategoryId(category, addedCategoryWithId)
-  //       },
-  //       (error: any) => {
-  //         // обратный вызов ошибки - нам нужно откатить состояние
-  //         this.settingsState.removeCashflowCategory(category);
-  //         console.log(error);
-  //       }
-  //     );
-  // }
 }
+
+

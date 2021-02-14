@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { Post } from '../models/post';
+import { Post } from '../shared/models/post';
 
 @Injectable()
 export class PostsState {
-  private updating$ = new BehaviorSubject(false);
 
+  private updating$ = new BehaviorSubject(false);
   private posts$: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);
   private post$: BehaviorSubject<any> = new BehaviorSubject<any>(0);
 
@@ -40,16 +40,17 @@ export class PostsState {
 
   updatePost(updatedPost: Post) {
     const posts = this.posts$.getValue();
-    const indexOfUpdated = posts.findIndex(
-      (post) => post.id === updatedPost.id
-    );
+    const indexOfUpdated = posts.findIndex(post => post.id === updatedPost.id);
     posts[indexOfUpdated] = updatedPost;
     this.posts$.next([...posts]);
-    console.log('ok');
   }
 
   removePost(postRemove: Post) {
     const currentValue = this.posts$.getValue();
-    this.posts$.next(currentValue.filter((post) => post !== postRemove));
+    this.posts$.next(currentValue.filter(post => post !== postRemove));
   }
 }
+
+
+
+

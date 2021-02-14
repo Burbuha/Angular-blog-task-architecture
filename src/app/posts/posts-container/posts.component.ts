@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Post } from 'src/app/models/post';
+import { Post } from 'src/app/shared/models/post';
 import { PostsFacadeService } from '../posts-facade.service';
 
 @Component({
@@ -9,7 +9,9 @@ import { PostsFacadeService } from '../posts-facade.service';
   styleUrls: ['./posts.component.css'],
 })
 export class PostsComponent implements OnInit {
+
   posts: Observable<Post[]>;
+
 
   isUpdating$: Observable<boolean>;
 

@@ -1,0 +1,12 @@
+.page-not-found {
+  margin-top: 50px;
+}
+
+h6 {
+  font-size: 32px;
+  font-weight: normal;
+  line-height: 40px;
+}
+.page-not-found__img {
+  max-width: 100%;
+}
