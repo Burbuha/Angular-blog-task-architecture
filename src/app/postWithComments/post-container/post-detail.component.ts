@@ -42,7 +42,7 @@ export class PostDetailComponent implements OnInit {
     // });
   }
 
-  addComment(value: string): void {
+  addComment(value: string[]): void {
     const name = value[0].trim();
     const body = value[1].trim();
     const postID = this.id;
@@ -52,7 +52,7 @@ export class PostDetailComponent implements OnInit {
     this.commentsService.addComment({ postID, name, body } as Comment);
   }
 
-  saveChanges(value: string): void {
+  saveChanges(value: string[]): void {
     console.log(value);
     const title = value[0].trim();
     const body = value[1].trim();

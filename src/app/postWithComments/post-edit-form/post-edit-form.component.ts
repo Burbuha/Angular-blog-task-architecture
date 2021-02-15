@@ -7,18 +7,20 @@ import { Post } from 'src/app/shared/models/post';
   styleUrls: ['./post-edit-form.component.css'],
 })
 export class PostEditComponent implements OnInit {
-
-  @Input() post?: Post;
+  @Input() post: Post = {
+    id: 1,
+    title: '',
+    body: '',
+  };
 
   @Output() onChangePost = new EventEmitter();
   @Output() onDeletePost = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
-  changePost(value: any): void {
-    console.log(value);
+  changePost(value: string[]): void {
     this.onChangePost.emit(value);
   }
   deletePost(): void {

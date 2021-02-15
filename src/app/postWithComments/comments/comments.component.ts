@@ -6,10 +6,8 @@ import { Comment } from 'src/app/shared/models/comment';
   templateUrl: './comments.component.html',
   styleUrls: ['./comments.component.css'],
 })
-export class CommentsComponent implements OnInit {
-  @Input() comments?: Comment[];
+export class CommentsComponent {
+  @Input() comments: Comment[] = [];
 
-  constructor() { }
-
-  ngOnInit(): void { }
+  constructor() {}
 }

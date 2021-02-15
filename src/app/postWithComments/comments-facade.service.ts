@@ -5,15 +5,13 @@ import { Injectable } from '@angular/core';
 import { CommentsStateService } from './comments-state.service';
 
 @Injectable()
-
 export class CommentsFacadeService {
-
   constructor(
     private commentsState: CommentsStateService,
     private commentsApi: CommentsApiService
-  ) { }
+  ) {}
 
-  isUpdating$(): Observable<any> {
+  isUpdating$(): Observable<boolean> {
     return this.commentsState.isUpdating$();
   }
 
@@ -35,14 +33,10 @@ export class CommentsFacadeService {
   }
 
   addComment(comment: any) {
-    return (
-      this.commentsApi
-        .addComment(comment)
-        .subscribe(
-          (comment) => this.commentsState.addComment(comment),
-          (error) => console.log(error),
-          () => this.commentsState.setUpdating(false)
-        )
+    return this.commentsApi.addComment(comment).subscribe(
+      (comment) => this.commentsState.addComment(comment),
+      (error) => console.log(error),
+      () => this.commentsState.setUpdating(false)
     );
   }
 }

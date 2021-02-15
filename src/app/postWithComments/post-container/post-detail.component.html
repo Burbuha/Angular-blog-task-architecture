@@ -1,8 +1,14 @@
 <app-post [post]="post | async"></app-post>
 
-<app-post-edit-form [post]="post | async" (onChangePost)="saveChanges($event)" (onDeletePost)="deletePost()">
+<app-post-edit-form
+  [post]="post | async"
+  (onChangePost)="saveChanges($event)"
+  (onDeletePost)="deletePost()"
+>
 </app-post-edit-form>
 
 <app-comments [comments]="comments | async"></app-comments>
 
-<app-comment-add-form (onClickAddComment)="addComment($event)"></app-comment-add-form>
+<app-comment-add-form
+  (onClickAddComment)="addComment($event)"
+></app-comment-add-form>

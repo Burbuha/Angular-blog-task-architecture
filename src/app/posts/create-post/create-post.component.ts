@@ -5,14 +5,12 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   templateUrl: './create-post.component.html',
   styleUrls: ['./create-post.component.css'],
 })
-export class CreatePostComponent implements OnInit {
+export class CreatePostComponent {
   @Output() onClickAddPost = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
-
-  addNewPost(value: any) {
+  addNewPost(value: string[]) {
     this.onClickAddPost.emit(value);
   }
 }

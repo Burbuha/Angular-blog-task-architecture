@@ -22,7 +22,7 @@ export class PostsComponent implements OnInit {
     this.postService.loadPosts();
   }
 
-  addPost(value: any): void {
+  addPost(value: string[]): void {
     const title = value[0].trim();
     const body = value[1].trim();
     if (!title && !body) {

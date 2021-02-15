@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Post } from './models/post';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root', // <--provides this service in the root ModuleInjector
+})
 export class PostsState {
   private updating$ = new BehaviorSubject(false);
   private posts$: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);

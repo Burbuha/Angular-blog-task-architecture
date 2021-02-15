@@ -1,4 +1,4 @@
-<div *ngIf="post">
+<div *ngIf="post; else loading">
   <div class="card mb-3">
     <div class="card-header pt-2 pb-2">
       <h5>{{ post.title | uppercase }}</h5>
@@ -8,3 +8,5 @@
     </div>
   </div>
 </div>
+
+<ng-template #loading>Loading...</ng-template>

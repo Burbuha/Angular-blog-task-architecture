@@ -6,7 +6,9 @@ import { PostsState } from './posts.state.service';
 import { Post } from 'src/app/shared/models/post';
 import { PostsApiService } from './posts-api.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root', // <--provides this service in the root ModuleInjector
+})
 export class PostsFacadeService {
   constructor(
     private postsApi: PostsApiService,
@@ -14,17 +16,17 @@ export class PostsFacadeService {
     private location: Location
   ) {}
 
-  isUpdating$(): Observable<any> {
+  isUpdating$(): Observable<boolean> {
     return this.postsState.isUpdating$();
   }
 
-  getPosts$(): Observable<any> {
+  getPosts$(): Observable<Post[]> {
     // здесь мы просто передаем состояние без каких-либо проекций
     // может случиться так, что необходимо объединить два или более потоков и вернуть их компонентам
     return this.postsState.getPosts$();
   }
 
-  getPost$(): Observable<any> {
+  getPost$(): Observable<Post> {
     return this.postsState.getPost();
   }
 

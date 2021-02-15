@@ -5,14 +5,12 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
   templateUrl: './comment-add-form.component.html',
   styleUrls: ['./comment-add-form.component.css'],
 })
-export class CommentAddFormComponent implements OnInit {
+export class CommentAddFormComponent {
   @Output() onClickAddComment = new EventEmitter();
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
-
-  addNewComment(value: any) {
+  addNewComment(value: string[]) {
     this.onClickAddComment.emit(value);
   }
 }

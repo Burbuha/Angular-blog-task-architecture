@@ -3,7 +3,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Post } from './models/post';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root', // <--provides this service in the root ModuleInjector
+})
 export class PostsApiService {
   private readonly postsUrl = 'https://jsonplaceholder.typicode.com/posts';
   // private httpOptions = {
@@ -25,7 +27,6 @@ export class PostsApiService {
     console.log(post);
     const id = typeof post === 'number' ? post : post.id;
     const url = `${this.postsUrl}/${id}`;
-
     return this.http.put(url, post);
   }
 
