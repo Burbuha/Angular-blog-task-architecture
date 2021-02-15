@@ -1,20 +1,18 @@
 import { tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { PostsApiService } from './posts-api.service';
+import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
 import { PostsState } from './posts.state.service';
 import { Post } from 'src/app/shared/models/post';
-import { Location } from '@angular/common';
+import { PostsApiService } from './posts-api.service';
 
 @Injectable()
-
 export class PostsFacadeService {
-
   constructor(
     private postsApi: PostsApiService,
     private postsState: PostsState,
-    private location: Location,
-  ) { }
+    private location: Location
+  ) {}
 
   isUpdating$(): Observable<any> {
     return this.postsState.isUpdating$();
@@ -31,8 +29,9 @@ export class PostsFacadeService {
   }
 
   loadPosts() {
-    return this.postsApi.getPosts()
-      .pipe(tap(posts => this.postsState.setPosts(posts)))
+    return this.postsApi
+      .getPosts()
+      .pipe(tap((posts) => this.postsState.setPosts(posts)))
       .subscribe(
         () => this.postsState.getPosts$(),
         (error) => console.log(error),
@@ -68,19 +67,17 @@ export class PostsFacadeService {
   }
 
   deletePost(id: number) {
-    return (
-      this.postsApi
-        .deletePost(id)
-        .pipe(tap((id) => this.postsState.removePost(id)))
-        .subscribe(
-          (id) => {
-            this.postsState.removePost(id);
-            this.goBack();
-          },
-          (error) => console.log(error),
-          () => this.postsState.setUpdating(false)
-        )
-    );
+    return this.postsApi
+      .deletePost(id)
+      .pipe(tap((id) => this.postsState.removePost(id)))
+      .subscribe(
+        (id) => {
+          this.postsState.removePost(id);
+          this.goBack();
+        },
+        (error) => console.log(error),
+        () => this.postsState.setUpdating(false)
+      );
   }
 
   goBack(): void {
@@ -92,16 +89,13 @@ export class PostsFacadeService {
   // 2. обновить состояние пользовательского интерфейса
   updatePost(post: Post) {
     this.postsState.setUpdating(true);
-    this.postsApi.updatePost(post)
-      .subscribe(
-        () => {
-          this.postsState.updatePost(post);
-          this.goBack();
-        },
-        (error) => console.log(error),
-        () => this.postsState.setUpdating(false)
-      );
+    this.postsApi.updatePost(post).subscribe(
+      () => {
+        this.postsState.updatePost(post);
+        this.goBack();
+      },
+      (error) => console.log(error),
+      () => this.postsState.setUpdating(false)
+    );
   }
 }
-
-

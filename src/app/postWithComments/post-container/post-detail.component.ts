@@ -6,7 +6,7 @@ import { Post } from 'src/app/shared/models/post';
 import { Comment } from 'src/app/shared/models/comment';
 
 import { CommentsFacadeService } from './../comments-facade.service';
-import { PostsFacadeService } from './../../posts/posts-facade.service';
+import { PostsFacadeService } from 'src/app/shared/posts-facade.service';
 
 @Component({
   selector: 'app-post-detail',
@@ -14,7 +14,6 @@ import { PostsFacadeService } from './../../posts/posts-facade.service';
   styleUrls: ['./post-detail.component.css'],
 })
 export class PostDetailComponent implements OnInit {
-
   post: Observable<Post>;
   comments: Observable<Comment[]>;
 
@@ -50,8 +49,7 @@ export class PostDetailComponent implements OnInit {
     if (!name && !body && !postID) {
       return;
     }
-    this.commentsService
-      .addComment({ postID, name, body } as Comment);
+    this.commentsService.addComment({ postID, name, body } as Comment);
   }
 
   saveChanges(value: string): void {

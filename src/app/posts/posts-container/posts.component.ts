@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Post } from 'src/app/shared/models/post';
-import { PostsFacadeService } from '../posts-facade.service';
+import { PostsFacadeService } from 'src/app/shared/posts-facade.service';
 
 @Component({
   selector: 'app-posts',
@@ -9,9 +9,7 @@ import { PostsFacadeService } from '../posts-facade.service';
   styleUrls: ['./posts.component.css'],
 })
 export class PostsComponent implements OnInit {
-
   posts: Observable<Post[]>;
-
 
   isUpdating$: Observable<boolean>;
 

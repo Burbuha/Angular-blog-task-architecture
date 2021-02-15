@@ -1,18 +1,16 @@
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Post } from '../shared/models/post';
+import { Post } from './models/post';
 
 @Injectable()
-
 export class PostsApiService {
-
   private readonly postsUrl = 'https://jsonplaceholder.typicode.com/posts';
   // private httpOptions = {
   //   headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   // };
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getPosts(): Observable<Post[]> {
     return this.http.get<Post[]>(`${this.postsUrl}?_limit=10`);
