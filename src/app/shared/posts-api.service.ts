@@ -8,10 +8,10 @@ import { Comment } from './models/comment';
   providedIn: 'root', // <--provides this service in the root ModuleInjector
 })
 export class PostsApiService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getPosts(): Observable<Post[]> {
-    return this.http.get<Post[]>(`?_limit=10`);
+    return this.http.get<Post[]>(``);
   }
 
   getPost(id: number): Observable<Post | undefined> {

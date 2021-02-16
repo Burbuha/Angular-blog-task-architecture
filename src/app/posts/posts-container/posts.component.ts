@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-//import { NgbPaginationConfig } from '@ng-bootstrap/ng-bootstrap';
 import { Observable } from 'rxjs';
 import { Post } from 'src/app/shared/models/post';
 import { PostsFacadeService } from 'src/app/shared/posts-facade.service';
@@ -7,12 +6,14 @@ import { PostsFacadeService } from 'src/app/shared/posts-facade.service';
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.css'],
-  // providers: [NgbPaginationConfig]
+  styleUrls: ['./posts.component.css']
 })
 export class PostsComponent implements OnInit {
   posts: Observable<Post[]>;
   isUpdating$: Observable<boolean>;
+  page: number = 1;
+  pageSize: number = 5;
+  maxSize: number = 5;
 
   constructor(private postService: PostsFacadeService) {
     this.posts = postService.getPosts$();
