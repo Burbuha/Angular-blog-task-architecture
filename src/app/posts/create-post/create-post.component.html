@@ -8,27 +8,22 @@
           type="text"
           class="form-control"
           #title
-          name="title"
           placeholder="Title"
-          ng-model="searchAll"
+          required
         />
         <label for="body">What's on your mind?</label>
         <textarea
           class="form-control"
           placeholder="Write something..."
           #body
-          ng-model="searchAll"
+          required
         ></textarea>
       </div>
 
       <div class="button d-flex justify-content-end">
         <button
           class="btn btn-primary"
-          (click)="
-            addNewPost([title.value, body.value]);
-            title.value = '';
-            body.value = ''
-          "
+          (click)="addNewPost([title.value, body.value])"
         >
           Post
         </button>

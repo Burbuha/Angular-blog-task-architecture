@@ -1,4 +1,4 @@
-import { tap } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';

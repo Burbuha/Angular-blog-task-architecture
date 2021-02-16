@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { HeadersInterceptor } from './interceptors/headers.interceptor';
 import { ApiInterceptor } from './interceptors/api.interceptor';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
@@ -21,6 +22,7 @@ import { ApiInterceptor } from './interceptors/api.interceptor';
     HttpClientModule,
     PostsModule,
     PostWithCommentsModule,
+    NgbModule,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },

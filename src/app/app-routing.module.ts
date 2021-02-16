@@ -8,13 +8,13 @@ const routes: Routes = [
   { path: '', redirectTo: '/posts', pathMatch: 'full' },
   { path: 'posts', component: PostsComponent },
   { path: 'detail/:id', component: PostDetailComponent },
-  {
-    path: 'lazy-loaded',
-    loadChildren: () =>
-      import('./postWithComments/post-with-comments.module').then(
-        (m) => m.PostWithCommentsModule
-      ),
-  },
+  // {
+  //   path: 'lazy-loaded',
+  //   loadChildren: () =>
+  //     import('./postWithComments/post-with-comments.module').then(
+  //       (m) => m.PostWithCommentsModule
+  //     ),
+  // },
   { path: '**', component: NotFoundComponent },
 ];
 

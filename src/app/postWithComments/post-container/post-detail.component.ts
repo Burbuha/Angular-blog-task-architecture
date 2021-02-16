@@ -50,7 +50,6 @@ export class PostDetailComponent implements OnInit {
   }
 
   saveChanges(value: string[]): void {
-    console.log(value);
     const title = value[0].trim();
     const body = value[1].trim();
     const id = this.id;

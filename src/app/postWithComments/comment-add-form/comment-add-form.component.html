@@ -3,9 +3,9 @@
   <input
     type="text"
     class="form-control"
-    #name
-    name="name"
     placeholder="Enter your name"
+    #name
+    required
   />
 </div>
 
@@ -14,17 +14,14 @@
     class="form-control"
     placeholder="Leave a comment here..."
     #body
+    required
   ></textarea>
 
   <div class="input-group-append d-flex">
     <button
       type="submit"
       class="btn btn-primary"
-      (click)="
-        addNewComment([name.value, body.value]);
-        body.value = '';
-        name.value = ''
-      "
+      (click)="addNewComment([name.value, body.value])"
     >
       Comment
     </button>
