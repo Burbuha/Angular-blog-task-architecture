@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { Post } from 'src/app/shared/models/post';
@@ -37,10 +37,6 @@ export class PostDetailComponent implements OnInit {
     this.postService.loadPost(this.id);
     this.commentsService.loadComments(this.id);
     console.log(this.post);
-
-    // this.route.params.subscribe((params) => {
-    //   this.id = params.id;
-    // });
   }
 
   addComment(value: string[]): void {

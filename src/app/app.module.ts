@@ -9,7 +9,8 @@ import { PostsModule } from './posts/posts.module';
 
 import { AppComponent } from './app.component';
 import { NotFoundComponent } from './not-found/not-found.component';
-import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { HeadersInterceptor } from './interceptors/headers.interceptor';
+import { ApiInterceptor } from './interceptors/api.interceptor';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],
@@ -22,7 +23,8 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
     PostWithCommentsModule,
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: HeadersInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: ApiInterceptor, multi: true },
   ],
   bootstrap: [AppComponent],
 })

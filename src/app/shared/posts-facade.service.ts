@@ -60,7 +60,6 @@ export class PostsFacadeService {
         .subscribe(
           (post) => {
             this.postsState.addPost(post);
-            this.goBack();
           },
           (error) => console.log(error),
           () => this.postsState.setUpdating(false)
@@ -69,21 +68,17 @@ export class PostsFacadeService {
   }
 
   deletePost(id: number) {
+    this.postsState.removePost(id);
     return this.postsApi
       .deletePost(id)
-      .pipe(tap((id) => this.postsState.removePost(id)))
+      .pipe(tap(() => console.log(`Post c id = ${id} deleted`)))
       .subscribe(
-        (id) => {
-          this.postsState.removePost(id);
-          this.goBack();
+        () => {
+          this.location.back();
         },
         (error) => console.log(error),
         () => this.postsState.setUpdating(false)
       );
-  }
-
-  goBack(): void {
-    this.location.back();
   }
 
   // пессимистичное обновление
@@ -94,7 +89,6 @@ export class PostsFacadeService {
     this.postsApi.updatePost(post).subscribe(
       () => {
         this.postsState.updatePost(post);
-        this.goBack();
       },
       (error) => console.log(error),
       () => this.postsState.setUpdating(false)

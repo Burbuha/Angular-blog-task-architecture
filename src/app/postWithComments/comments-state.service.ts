@@ -1,4 +1,4 @@
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Comment } from '../shared/models/comment';
 
@@ -12,23 +12,26 @@ export class CommentsStateService {
     Comment[]
   >([]);
 
-  isUpdating$() {
+  isUpdating$(): Observable<boolean> {
+    console.log(this.updatingComments$.asObservable());
     return this.updatingComments$.asObservable();
   }
 
-  setUpdating(isUpdating: boolean) {
+  setUpdating(isUpdating: boolean): void {
     this.updatingComments$.next(isUpdating);
   }
 
-  getComments$() {
+  getComments$(): Observable<Comment[]> {
+    console.log(this.comments$.asObservable());
     return this.comments$.asObservable();
   }
 
-  setComments(comments: Comment[]) {
+  setComments(comments: Comment[]): void {
+    console.log(this.comments$.next(comments));
     this.comments$.next(comments);
   }
 
-  addComment(comment: Comment) {
+  addComment(comment: Comment): void {
     const currentValue = this.comments$.getValue();
     this.comments$.next([...currentValue, comment]);
   }

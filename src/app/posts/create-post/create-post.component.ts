@@ -1,4 +1,10 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  HostBinding,
+} from '@angular/core';
 
 @Component({
   selector: 'app-create-post',
