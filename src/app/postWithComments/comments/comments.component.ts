@@ -7,7 +7,7 @@ import { Comment } from 'src/app/shared/models/comment';
   styleUrls: ['./comments.component.css'],
 })
 export class CommentsComponent {
-  @Input() comments: Comment[] = [];
+  @Input() comments?: Comment[];
 
   constructor() {}
 }

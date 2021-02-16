@@ -8,7 +8,11 @@ import { Post } from './models/post';
 export class PostsState {
   private updating$ = new BehaviorSubject(false);
   private posts$: BehaviorSubject<Post[]> = new BehaviorSubject<Post[]>([]);
-  private post$: BehaviorSubject<any> = new BehaviorSubject<any>(0);
+  private post$: BehaviorSubject<Post> = new BehaviorSubject<Post>({
+    id: 1,
+    body: '',
+    title: '',
+  });
 
   isUpdating$() {
     return this.updating$.asObservable();

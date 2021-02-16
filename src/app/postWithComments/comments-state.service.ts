@@ -3,12 +3,14 @@ import { Injectable } from '@angular/core';
 import { Comment } from '../shared/models/comment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CommentsStateService {
   private updatingComments$ = new BehaviorSubject(false);
 
-  private comments$: BehaviorSubject<Comment[]> = new BehaviorSubject<Comment[]>([]);
+  private comments$: BehaviorSubject<Comment[]> = new BehaviorSubject<
+    Comment[]
+  >([]);
 
   isUpdating$() {
     return this.updatingComments$.asObservable();

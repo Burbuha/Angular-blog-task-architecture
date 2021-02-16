@@ -16,8 +16,7 @@ export class CommentsFacadeService {
   }
 
   getComments$(): Observable<any> {
-    // здесь мы просто передаем состояние без каких-либо проекций
-    // может случиться так, что необходимо объединить два или более потоков и вернуть их компонентам
+    console.log(this.commentsState.getComments$());
     return this.commentsState.getComments$();
   }
 
@@ -33,6 +32,7 @@ export class CommentsFacadeService {
   }
 
   addComment(comment: any) {
+    console.log(comment); // {postID: 1, name: "dddd", body: "ddddd"}
     return this.commentsApi.addComment(comment).subscribe(
       (comment) => this.commentsState.addComment(comment),
       (error) => console.log(error),
