@@ -1,14 +1,28 @@
 <app-create-post (onClickAddPost)="addPost($event)"></app-create-post>
 
-<div class="card-body shadow p-3 mb-3 mt-3 bg-white rounded"
-  *ngFor="let post of posts | async | slice: (page - 1) * pageSize:page * pageSize">
+<div
+  class="card-body shadow p-3 mb-3 mt-3 bg-white rounded"
+  *ngFor="
+    let post of posts
+      | async
+      | pagination: settingsPagination.page:settingsPagination.pageSize
+  "
+>
   <app-post-preview [post]="post"></app-post-preview>
 
   <div class="card-btn d-flex justify-content-end">
-    <a href="#" class="btn btn-link" routerLink="/detail/{{ post.id }}">...see more</a>
+    <a href="#" class="btn btn-link" routerLink="/detail/{{ post.id }}"
+      >...see more</a
+    >
   </div>
 </div>
 
-<ngb-pagination class="d-flex justify-content-center" [maxSize]="maxSize" [boundaryLinks]="true" [(page)]="page"
-  [pageSize]="pageSize" [collectionSize]="(posts | async).length">
+<ngb-pagination
+  class="d-flex justify-content-center"
+  [maxSize]="settingsPagination.maxSize"
+  [boundaryLinks]="true"
+  [(page)]="settingsPagination.page"
+  [pageSize]="settingsPagination.pageSize"
+  [collectionSize]="(posts | async).length"
+>
 </ngb-pagination>

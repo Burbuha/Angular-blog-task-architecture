@@ -1,6 +1,7 @@
-import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+
+import { Observable } from 'rxjs';
 
 import { Post } from 'src/app/shared/models/post';
 import { Comment } from 'src/app/shared/models/comment';
@@ -36,7 +37,6 @@ export class PostDetailComponent implements OnInit {
   ngOnInit(): void {
     this.postService.loadPost(this.id);
     this.commentsService.loadComments(this.id);
-    console.log(this.post);
   }
 
   addComment(value: string[]): void {

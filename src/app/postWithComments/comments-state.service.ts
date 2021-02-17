@@ -1,5 +1,7 @@
-import { BehaviorSubject, Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
+
+import { BehaviorSubject, Observable } from 'rxjs';
+
 import { Comment } from '../shared/models/comment';
 
 @Injectable({
@@ -13,7 +15,6 @@ export class CommentsStateService {
   >([]);
 
   isUpdating$(): Observable<boolean> {
-    console.log(this.updatingComments$.asObservable());
     return this.updatingComments$.asObservable();
   }
 
@@ -22,12 +23,10 @@ export class CommentsStateService {
   }
 
   getComments$(): Observable<Comment[]> {
-    console.log(this.comments$.asObservable());
     return this.comments$.asObservable();
   }
 
   setComments(comments: Comment[]): void {
-    console.log(this.comments$.next(comments));
     this.comments$.next(comments);
   }
 

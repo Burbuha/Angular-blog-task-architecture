@@ -1,6 +1,5 @@
 import { Post } from 'src/app/shared/models/post';
-import { Component, OnInit, Input } from '@angular/core';
-import { PostsApiService } from 'src/app/shared/posts-api.service';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-post-preview',

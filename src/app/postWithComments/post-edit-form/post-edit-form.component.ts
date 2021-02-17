@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+
 import { Post } from 'src/app/shared/models/post';
 
 @Component({

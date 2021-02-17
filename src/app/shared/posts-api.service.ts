@@ -1,17 +1,20 @@
-import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+
+import { Observable } from 'rxjs';
+
 import { Post } from './models/post';
-import { Comment } from './models/comment';
 
 @Injectable({
-  providedIn: 'root', // <--provides this service in the root ModuleInjector
+  providedIn: 'root',
 })
 export class PostsApiService {
-  constructor(private http: HttpClient) { }
+  LIMIT: string = `?_limit=50`;
+
+  constructor(private http: HttpClient) {}
 
   getPosts(): Observable<Post[]> {
-    return this.http.get<Post[]>(``);
+    return this.http.get<Post[]>(this.LIMIT);
   }
 
   getPost(id: number): Observable<Post | undefined> {
@@ -33,16 +36,5 @@ export class PostsApiService {
 
   addPost(post: Post): Observable<Post> {
     return this.http.post<Post>('', post);
-  }
-
-  getComments(id: number): Observable<Comment | undefined> {
-    const url = `${id}/comments`;
-    return this.http.get<Comment>(url);
-  }
-
-  addComment(comment: Comment) {
-    const id = comment.postID;
-    const url = `${id}/comments`;
-    return this.http.post<Comment>(url, comment);
   }
 }

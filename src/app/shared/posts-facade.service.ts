@@ -1,13 +1,15 @@
-import { map, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
 import { Location } from '@angular/common';
 import { Injectable } from '@angular/core';
+
+import { tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
 import { PostsState } from './posts.state.service';
-import { Post } from 'src/app/shared/models/post';
 import { PostsApiService } from './posts-api.service';
+import { Post } from 'src/app/shared/models/post';
 
 @Injectable({
-  providedIn: 'root', // <--provides this service in the root ModuleInjector
+  providedIn: 'root',
 })
 export class PostsFacadeService {
   constructor(
@@ -21,8 +23,6 @@ export class PostsFacadeService {
   }
 
   getPosts$(): Observable<Post[]> {
-    // здесь мы просто передаем состояние без каких-либо проекций
-    // может случиться так, что необходимо объединить два или более потоков и вернуть их компонентам
     return this.postsState.getPosts$();
   }
 
@@ -53,17 +53,13 @@ export class PostsFacadeService {
   }
 
   addPost(post: Post) {
-    return (
-      this.postsApi
-        .addPost(post)
-        // .pipe(tap((posts) => this.postsState.addPost(posts)))
-        .subscribe(
-          (post) => {
-            this.postsState.addPost(post);
-          },
-          (error) => console.log(error),
-          () => this.postsState.setUpdating(false)
-        )
+    return this.postsApi.addPost(post).subscribe(
+      (post) => {
+        this.postsState.addPost(post);
+        this.location.back();
+      },
+      (error) => console.log(error),
+      () => this.postsState.setUpdating(false)
     );
   }
 
@@ -81,9 +77,6 @@ export class PostsFacadeService {
       );
   }
 
-  // пессимистичное обновление
-  // 1. вызов API
-  // 2. обновить состояние пользовательского интерфейса
   updatePost(post: Post) {
     this.postsState.setUpdating(true);
     this.postsApi.updatePost(post).subscribe(

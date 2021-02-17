@@ -6,14 +6,16 @@ import { PostsFacadeService } from 'src/app/shared/posts-facade.service';
 @Component({
   selector: 'app-posts',
   templateUrl: './posts.component.html',
-  styleUrls: ['./posts.component.css']
+  styleUrls: ['./posts.component.css'],
 })
 export class PostsComponent implements OnInit {
   posts: Observable<Post[]>;
   isUpdating$: Observable<boolean>;
-  page: number = 1;
-  pageSize: number = 5;
-  maxSize: number = 5;
+  settingsPagination = {
+    page: 1,
+    pageSize: 5,
+    maxSize: 5,
+  };
 
   constructor(private postService: PostsFacadeService) {
     this.posts = postService.getPosts$();
